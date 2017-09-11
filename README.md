@@ -1,5 +1,17 @@
 # Lambda Dead letter queue Demo
 
+## Requires
+
+- AWS Credentials
+- AWS Region
+
+e.g.
+
+```
+$ export AWS_PROFILE=myprofile
+$ export AWS_REGION=ap-northeast-1
+```
+
 ## How to setup
 
 ```
