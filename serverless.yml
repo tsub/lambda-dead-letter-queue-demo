@@ -1,0 +1,48 @@
+service: tsub-aws-nodejs
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: ap-northeast-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource:
+        - "*"
+
+functions:
+  hello:
+    handler: src/handler.hello
+    onError:
+      Ref: DeadLetterQueueTopic
+
+resources:
+  Resources:
+    DeadLetterQueueTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: tsub-dead-letter-queue
+        TopicName: tsub-dead-letter-queue
+
+    DeadLetterQueueSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint:
+          Fn::GetAtt:
+            - HelloLambdaFunction
+            - Arn
+        Protocol: lambda
+        TopicArn:
+          Ref: DeadLetterQueueTopic
+
+    DeadLetterQueueLambdaPermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName:
+          Fn::GetAtt:
+            - HelloLambdaFunction
+            - Arn
+        Action: lambda:InvokeFunction
+        Principal: sns.amazonaws.com

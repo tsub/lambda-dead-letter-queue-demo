@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "try-deadletter-queue",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless": "^1.21.1"
+  }
+}
