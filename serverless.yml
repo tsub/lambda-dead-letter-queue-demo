@@ -1,4 +1,4 @@
-service: tsub-aws-nodejs
+service: dead-letter-queue-demo
 
 provider:
   name: aws
@@ -23,8 +23,8 @@ resources:
     DeadLetterQueueTopic:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: tsub-dead-letter-queue
-        TopicName: tsub-dead-letter-queue
+        DisplayName: dead-letter-queue
+        TopicName: dead-letter-queue
 
     DeadLetterQueueSubscription:
       Type: AWS::SNS::Subscription
